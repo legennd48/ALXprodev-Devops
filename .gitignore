@@ -1,0 +1,5 @@
+*.sh
+pokemon_data/
+*.json
+*.txt
+*.csv
