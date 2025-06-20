@@ -28,10 +28,21 @@ fetch_pokemon() {
   fi
 }
 
+pids=()
+
 for POKEMON in "${POKEMON_LIST[@]}"; do
   echo "Fetching data for $POKEMON..."
   fetch_pokemon "$POKEMON" &
+  pids+=($!)
 done
 
-wait
-echo "All fetch operations completed."
+# Show background jobs
+jobs
+
+# Wait for all background jobs to finish
+for pid in "${pids[@]}"; do
+  wait "$pid"
+done
+
+# Example: kill any remaining background jobs (if needed)
+jobs -p | xargs -r kill 2>/dev/null
